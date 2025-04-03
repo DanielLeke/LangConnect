@@ -10,45 +10,68 @@ class Signup extends StatelessWidget {
         backgroundColor: Colors.white,
         body: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Container(
-                height: 150,
-                color: Colors.grey[200],
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.translate_sharp,
-                    size: 85,
-                    color: Colors.blue[900],
+            Flex(
+              mainAxisSize: MainAxisSize.min,
+              direction: Axis.vertical,
+              children: [
+                Container(
+                  height: 150,
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(12),
+                      bottomRight: Radius.circular(12)
+                    )
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      Icons.translate_sharp,
+                      size: 85,
+                      color: Colors.blue[900],
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.red[300]
-              ),
-              child: Column(
-                children: [
-                  Padding(
+                Flexible(
+                  child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      alignment: Alignment.topLeft,
-                      child: const Text(
-                        "Create Account",
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white
-                        ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            child: const Text(
+                              "Create Account",
+                              style: TextStyle(
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black
+                              ),
+                            ),
+                          ),
+                          TextField(
+                            decoration: InputDecoration(
+                              label: Text("Email"),
+                              enabled: true,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(8)),
+                                borderSide: BorderSide(color: Colors.blue[900]!, width: 2)
+                              ),
+                    
+                            ),
+                            obscureText: false,
+                          ),
+                        ],
                       ),
                     ),
-                  )
-                ],
-              ),
-            )
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       )
