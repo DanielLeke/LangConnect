@@ -47,20 +47,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB71kwv0Kvp9qfK6M0e6Ddu0kAS5Hu_074',
-    appId: '1:226605039149:web:ae4bfd55e8ecfbd2de02a4',
-    messagingSenderId: '226605039149',
-    projectId: 'langconnect-translator',
-    authDomain: 'langconnect-translator.firebaseapp.com',
-    storageBucket: 'langconnect-translator.firebasestorage.app',
+    apiKey: 'AIzaSyAgmWURSeWVCizstJC58zD0eayOxMic_8k',
+    appId: '1:900968777377:web:41b8c8a6971facb0c492e0',
+    messagingSenderId: '900968777377',
+    projectId: 'langconnect-langtranslator',
+    authDomain: 'langconnect-langtranslator.firebaseapp.com',
+    storageBucket: 'langconnect-langtranslator.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAHo4lo8ciEatuf2W2u7aAwfOsNQMDlnGo',
-    appId: '1:226605039149:android:5d099d8dc7180d84de02a4',
-    messagingSenderId: '226605039149',
-    projectId: 'langconnect-translator',
-    storageBucket: 'langconnect-translator.firebasestorage.app',
+    apiKey: 'AIzaSyAaQfUhtfV-0U86HMTiG2342hdirheRFbs',
+    appId: '1:900968777377:android:a7c27e575f2be824c492e0',
+    messagingSenderId: '900968777377',
+    projectId: 'langconnect-langtranslator',
+    storageBucket: 'langconnect-langtranslator.firebasestorage.app',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
