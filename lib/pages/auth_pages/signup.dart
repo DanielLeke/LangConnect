@@ -6,7 +6,21 @@ class Signup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold()
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: ListView(
+          children: [
+            Container(
+              color: Colors.grey[100],
+              child: Icon(
+                Icons.translate_sharp,
+                size: 85,
+                color: Colors.blue[900],
+              ),
+            ),
+          ],
+        ),
+      )
     );
   }
 }
