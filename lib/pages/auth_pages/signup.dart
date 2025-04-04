@@ -20,12 +20,17 @@ class Signup extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Column(
                         children: [
                           SignupText(),
+                          SizedBox(height: 50),
+                          UsernameField(),
+                          SizedBox(height: 40),
                           EmailField(),
+                          SizedBox(height: 40),
+                          PasswordField(),
                         ],
                       ),
                     ),
@@ -40,6 +45,58 @@ class Signup extends StatelessWidget {
   }
 }
 
+class UsernameField extends StatelessWidget {
+  const UsernameField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+        label: const Text("Username", style: TextStyle(color: Colors.grey),),
+        enabled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.blue[900]!, width: 2)
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.blue[900]!, width: 2)
+        ),
+      ),
+      cursorColor: Colors.black,
+      obscureText: false,
+    );
+  }
+}
+
+class PasswordField extends StatelessWidget {
+  const PasswordField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      decoration: InputDecoration(
+        label: const Text("Password", style: TextStyle(color: Colors.grey),),
+        enabled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.blue[900]!, width: 2)
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.blue[900]!, width: 2)
+        ),
+      ),
+      cursorColor: Colors.black,
+      obscureText: true,
+    );
+  }
+}
+
 class EmailField extends StatelessWidget {
   const EmailField({
     super.key,
@@ -49,13 +106,18 @@ class EmailField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       decoration: InputDecoration(
-        label: Text("Email"),
+        label: const Text("Email", style: TextStyle(color: Colors.grey),),
         enabled: true,
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderSide: BorderSide(color: Colors.blue[900]!, width: 2)
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
           borderSide: BorderSide(color: Colors.blue[900]!, width: 2)
         ),
       ),
+      cursorColor: Colors.black,
       obscureText: false,
     );
   }
