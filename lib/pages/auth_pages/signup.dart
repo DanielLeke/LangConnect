@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+TextEditingController usernameController = TextEditingController();
+
 class Signup extends StatelessWidget {
   const Signup({super.key});
 
@@ -70,6 +74,7 @@ class UsernameField extends StatelessWidget {
       ),
       cursorColor: Colors.black,
       obscureText: false,
+      controller: usernameController,
     );
   }
 }
@@ -97,6 +102,7 @@ class PasswordField extends StatelessWidget {
       ),
       cursorColor: Colors.black,
       obscureText: true,
+      controller: passwordController,
     );
   }
 }
@@ -124,6 +130,7 @@ class EmailField extends StatelessWidget {
       ),
       cursorColor: Colors.black,
       obscureText: false,
+      controller: emailController,
     );
   }
 }

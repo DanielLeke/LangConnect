@@ -48,8 +48,7 @@ class Authservice {
           message = "An error occurred. ${e.message}";
           break;
       }
-    }
-    catch (e) {
+    } catch (e) {
       message = "An unexpected error occurred. Please try again.";
     }
     return message;
