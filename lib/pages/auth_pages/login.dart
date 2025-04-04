@@ -156,7 +156,19 @@ class LoginBtn extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           )),
         ),
-        onPressed: () {},
+        onPressed: () async {
+          Authservice _authService = Authservice();
+          String message = await _authService.signin(
+              email: emailController.text, password: passwordController.text);
+          print(message);
+          if (message == "Success") {}
+          else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(message),
+              duration: const Duration(seconds: 2),
+            ));
+          }
+        },
         child: const Text("Login",
             style: TextStyle(
                 color: Colors.white,
