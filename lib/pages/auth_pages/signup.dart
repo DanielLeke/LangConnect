@@ -157,6 +157,12 @@ class TranslateIcon extends StatelessWidget {
       height: 150,
       width: double.maxFinite,
       decoration: BoxDecoration(
+        boxShadow: [BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 2,
+          blurRadius: 10,
+          offset: const Offset(0, 3),
+        )],
         color: Colors.grey[200],
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(12),
@@ -182,6 +188,8 @@ class SignupBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
+        shadowColor: WidgetStatePropertyAll(Colors.grey[300]),
+        elevation: const WidgetStatePropertyAll(5),
         backgroundColor: WidgetStatePropertyAll(Colors.blue[900]),
         fixedSize: const WidgetStatePropertyAll(Size(350, 50)),
         shape: WidgetStatePropertyAll(RoundedRectangleBorder(
