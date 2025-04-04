@@ -28,11 +28,11 @@ class Signup extends StatelessWidget {
                         SignupText(),
                         SizedBox(height: 50),
                         UsernameField(),
-                        SizedBox(height: 40),
+                        SizedBox(height: 60),
                         EmailField(),
-                        SizedBox(height: 40),
+                        SizedBox(height: 60),
                         PasswordField(),
-                        SizedBox(height: 50),
+                        SizedBox(height: 60),
                         SignupBtn(),
                       ],
                     ),
@@ -213,7 +213,7 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: Colors.grey[100],
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
