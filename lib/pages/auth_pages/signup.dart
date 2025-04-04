@@ -31,6 +31,8 @@ class Signup extends StatelessWidget {
                           EmailField(),
                           SizedBox(height: 40),
                           PasswordField(),
+                          SizedBox(height: 50),
+                          SignupBtn(),
                         ],
                       ),
                     ),
@@ -169,6 +171,33 @@ class TranslateIcon extends StatelessWidget {
           color: Colors.blue[900],
         ),
       ),
+    );
+  }
+}
+
+class SignupBtn extends StatelessWidget {
+  const SignupBtn({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: WidgetStatePropertyAll(Colors.blue[900]),
+        fixedSize: const WidgetStatePropertyAll(Size(350, 50)),
+        shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        )),
+      ),
+      onPressed: (){}, 
+      child: const Text(
+        "Sign Up",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 1.5
+        )
+      )
     );
   }
 }
