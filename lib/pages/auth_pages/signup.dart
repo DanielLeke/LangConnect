@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:langconnect/pages/auth_pages/login.dart';
 import 'package:langconnect/utilities/authservice.dart';
+import 'package:langconnect/utilities/users_service.dart';
 
 TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
@@ -210,8 +211,12 @@ class SignupBtn extends StatelessWidget {
           String message = await _authservice.signup(
               email: emailController.text, password: passwordController.text);
           print(message);
-          if (message == "Success") {}
-          else {
+          if (message == "Success") {
+            UsersService _usersService = UsersService();
+            await _usersService.addUser(
+                email: emailController.text,
+                username: usernameController.text);
+          } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(message),
               duration: const Duration(seconds: 2),

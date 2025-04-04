@@ -9,7 +9,8 @@ class UsersService {
       await _firestore.collection('users').doc(username).set({
         'email': email,
         'username': username,
-      });
+      }, SetOptions(merge: true));
+      print('User added successfully!');
     } catch (e) {
       print("Error adding user: $e");
     }
