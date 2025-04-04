@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:langconnect/utilities/authservice.dart';
 
 TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
@@ -241,7 +242,19 @@ class BottomNavBar extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: (){}, 
+            onPressed: () async {
+              Authservice _authservice = Authservice();
+              String message = await _authservice.signup(email: emailController.text, password: passwordController.text);
+              if (message == "Success") {
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(message),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              }
+            }, 
             child: Text(
               "Login",
               style: TextStyle(
