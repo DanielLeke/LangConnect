@@ -22,6 +22,7 @@ class Authservice {
       }
     } catch (e) {
       message = "An unexpected error occurred. Please try again.";
+      print(e);
     }
     return message;
   }

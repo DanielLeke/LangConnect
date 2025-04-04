@@ -205,7 +205,19 @@ class SignupBtn extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           )),
         ),
-        onPressed: () {},
+        onPressed: () async {
+          Authservice _authservice = Authservice();
+          String message = await _authservice.signup(
+              email: emailController.text, password: passwordController.text);
+          print(message);
+          if (message == "Success") {}
+          else {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(message),
+              duration: const Duration(seconds: 2),
+            ));
+          }
+        },
         child: const Text("Sign Up",
             style: TextStyle(
                 color: Colors.white,
