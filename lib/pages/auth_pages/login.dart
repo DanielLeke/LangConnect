@@ -168,9 +168,11 @@ class LoginBtn extends StatelessWidget {
           print(message);
           if (message == "Success") {
             UsersService _usersService = UsersService();
+            String username = await _usersService.getUserInformation(email: _emailController.text, field: "username");
+            print(username);
             await _usersService.addUser(
                 email: _emailController.text,
-                username: usernameController.text);
+                username: username);
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (_) => const TextTranslation()));
           } else {
