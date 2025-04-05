@@ -1,25 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:langconnect/pages/others/about.dart';
+import 'package:langconnect/pages/others/favorites.dart';
+import 'package:langconnect/pages/others/history.dart';
+import 'package:langconnect/pages/others/settings.dart';
+import 'package:langconnect/pages/translation_pages/camera_page.dart';
+import 'package:langconnect/pages/translation_pages/chat_page.dart';
 
-int _mainIndex = 1;
-int _selectedIndex = 2;
-List<List<Widget>> pages = [
-  [],
-  [],
-];
-
-class TextTranslation extends StatelessWidget {
-  const TextTranslation({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: const TranslateAppBar(),
-      drawer: const TranslateDrawer(),
-      bottomNavigationBar: const TranslateBottomNavBar(),
-    );
-  }
-}
+int _navIndex = 2;
+int _drawerIndex = 0;
+bool viewNav = true;
 
 class TranslateAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TranslateAppBar({super.key});
@@ -54,8 +43,9 @@ class TranslateBottomNavBar extends StatefulWidget {
 class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
   void _onItemTapped(int index) {
     setState(() {
-      _mainIndex = 1;
-      _selectedIndex = index;
+      viewNav = true;
+      _navIndex = index;
+      print("Nav index: $_navIndex");
     });
   }
 
@@ -64,7 +54,7 @@ class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
     return BottomNavigationBar(
       unselectedItemColor: Colors.black,
       selectedItemColor: Colors.blue[900],
-      currentIndex: _selectedIndex,
+      currentIndex: _navIndex,
       showSelectedLabels: false,
       showUnselectedLabels: true,
       backgroundColor: Colors.grey[200],
@@ -87,14 +77,14 @@ class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: _selectedIndex == index
+          color: _navIndex == index
               ? Colors.blue[900]!.withOpacity(0.2)
               : Colors.transparent,
         ),
         child: Icon(
           icon,
-          color: _selectedIndex == index ? Colors.blue[900] : Colors.black,
-          size: _selectedIndex == index ? 35 : 24,
+          color: _navIndex == index ? Colors.blue[900] : Colors.black,
+          size: _navIndex == index ? 35 : 24,
         ),
       ),
       label: label,
@@ -110,11 +100,11 @@ class TranslateDrawer extends StatefulWidget {
 }
 
 class _TranslateDrawerState extends State<TranslateDrawer> {
-  int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
-      _mainIndex = 0;
-      _selectedIndex = index;
+      viewNav = false;
+      _drawerIndex = index;
+      print("Drawer index: $_drawerIndex");
     });
   }
 
@@ -153,20 +143,20 @@ class _TranslateDrawerState extends State<TranslateDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.settings),
-            selected: _selectedIndex == 1,
+            selected: _drawerIndex == 0,
             selectedColor: Colors.blue[900],
             title: const Text("Settings"),
             onTap: () {
-              _onItemTapped(1);
+              _onItemTapped(0);
             },
           ),
           ListTile(
             leading: const Icon(Icons.info),
             title: const Text("About"),
-            selected: _selectedIndex == 2,
+            selected: _drawerIndex == 1,
             selectedColor: Colors.blue[900],
             onTap: () {
-              _onItemTapped(2);
+              _onItemTapped(1);
             },
           ),
         ],
@@ -180,6 +170,28 @@ class Translator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Text("Translator");
+  }
+}
+
+
+
+List<Widget> navpages = const [ChatPage(), CameraPage(), Translator(), History(), Favorites()];
+List<Widget> drawerpages = const [Settings(), About()];
+
+class TextTranslation extends StatelessWidget {
+  const TextTranslation({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      appBar: const TranslateAppBar(),
+      drawer: const TranslateDrawer(),
+      bottomNavigationBar: const TranslateBottomNavBar(),
+      body: viewNav
+          ? navpages[_navIndex]
+          : drawerpages[_drawerIndex],
+    );
   }
 }
