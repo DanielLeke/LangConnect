@@ -174,3 +174,12 @@ class _TranslateDrawerState extends State<TranslateDrawer> {
     );
   }
 }
+
+class Translator extends StatelessWidget {
+  const Translator({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
