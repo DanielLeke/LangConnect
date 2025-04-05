@@ -104,7 +104,7 @@ class EmailField extends StatelessWidget {
       ),
       cursorColor: Colors.black,
       obscureText: false,
-      controller: emailController,
+      controller: _emailController,
     );
   }
 }
@@ -164,16 +164,15 @@ class LoginBtn extends StatelessWidget {
         onPressed: () async {
           Authservice _authService = Authservice();
           String message = await _authService.signin(
-              email: emailController.text, password: passwordController.text);
+              email: _emailController.text, password: passwordController.text);
           print(message);
           if (message == "Success") {
             UsersService _usersService = UsersService();
             await _usersService.addUser(
-                email: _emailController.text, username: usernameController.text);
-            Navigator.pushReplacement(
-              context, 
-              MaterialPageRoute(builder: (_) => const TextTranslation())
-            );
+                email: _emailController.text,
+                username: usernameController.text);
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (_) => const TextTranslation()));
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(message),
@@ -219,7 +218,7 @@ class LoginBottomNavBar extends StatelessWidget {
           ),
           TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const Signup()));
               },
               child: Text(
                 "Sign Up",
