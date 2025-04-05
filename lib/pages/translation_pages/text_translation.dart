@@ -56,29 +56,39 @@ class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
       unselectedItemColor: Colors.black,
       selectedItemColor: Colors.blue[900],
       currentIndex: _selectedIndex,
+      showSelectedLabels: false,
+      showUnselectedLabels: true,
       backgroundColor: Colors.grey[200],
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.mic,),
-          label: "Chat",
+      type: BottomNavigationBarType.fixed,
+      onTap: _onItemTapped,
+      items: <BottomNavigationBarItem>[
+        _buildNavItem(Icons.mic, "Chat", 0),
+        _buildNavItem(Icons.camera_alt, "Camera", 1),
+        _buildNavItem(Icons.translate_sharp, "Translate", 2),
+        _buildNavItem(Icons.history_rounded, "History", 3),
+        _buildNavItem(Icons.favorite, "Favorites", 4),
+      ],
+    );
+  }
+
+  BottomNavigationBarItem _buildNavItem(
+      IconData icon, String label, int index) {
+    return BottomNavigationBarItem(
+      icon: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: _selectedIndex == index
+              ? Colors.blue[900]!.withOpacity(0.2)
+              : Colors.transparent,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.camera_alt),
-          label: "Camera",
+        child: Icon(
+          icon,
+          color: _selectedIndex == index ? Colors.blue[900] : Colors.black,
+          size: _selectedIndex == index ? 35 : 24,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.translate_sharp),
-          label: "Translate",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.history_rounded),
-          label: "History",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: "Favorites",
-        )
-      ]
+      ),
+      label: label,
     );
   }
 }
