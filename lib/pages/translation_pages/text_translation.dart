@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+int _selectedIndex = 2;
+List<List<Widget>> pages = [
+  [],
+  [],
+];
+
 class TextTranslation extends StatelessWidget {
   const TextTranslation({super.key});
 
@@ -43,7 +49,6 @@ class TranslateBottomNavBar extends StatefulWidget {
 }
 
 class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
-  int _selectedIndex = 2;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -89,6 +94,75 @@ class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
         ),
       ),
       label: label,
+    );
+  }
+}
+
+class TranslateDrawer extends StatefulWidget {
+  const TranslateDrawer({super.key});
+
+  @override
+  State<TranslateDrawer> createState() => _TranslateDrawerState();
+}
+
+class _TranslateDrawerState extends State<TranslateDrawer> {
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.grey[200],
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          const DrawerHeader(
+            decoration: const BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text(
+                  "Language Translator",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ), SizedBox(height: 10), Text(
+                  "Translate your text easily",
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings),
+            selected: _selectedIndex == 0,
+            selectedColor: Colors.blue[900],
+            title: const Text("Settings"),
+            onTap: () {
+              _onItemTapped(0);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.info),
+            title: const Text("About"),
+            selected: _selectedIndex == 1,
+            selectedColor: Colors.blue[900],
+            onTap: () {
+              _onItemTapped(1);
+            },
+          ),
+        ],
+      ),
     );
   }
 }
