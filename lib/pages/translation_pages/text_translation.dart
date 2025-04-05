@@ -6,10 +6,6 @@ import 'package:langconnect/pages/others/settings.dart';
 import 'package:langconnect/pages/translation_pages/camera_page.dart';
 import 'package:langconnect/pages/translation_pages/chat_page.dart';
 
-int _navIndex = 2;
-int _drawerIndex = 0;
-bool viewNav = true;
-
 class TranslateAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TranslateAppBar({super.key});
 
@@ -34,19 +30,22 @@ class TranslateAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class TranslateBottomNavBar extends StatefulWidget {
-  const TranslateBottomNavBar({super.key});
+  final Function(int) onTap;
+
+  const TranslateBottomNavBar({super.key, required this.onTap});
 
   @override
   State<TranslateBottomNavBar> createState() => _TranslateBottomNavBarState();
 }
 
 class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
+  int _navIndex = 2;
+
   void _onItemTapped(int index) {
     setState(() {
-      viewNav = true;
       _navIndex = index;
-      print("Nav index: $_navIndex");
     });
+    widget.onTap(index);
   }
 
   @override
@@ -93,19 +92,22 @@ class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
 }
 
 class TranslateDrawer extends StatefulWidget {
-  const TranslateDrawer({super.key});
+  final Function(int) onTap;
+
+  const TranslateDrawer({super.key, required this.onTap});
 
   @override
   State<TranslateDrawer> createState() => _TranslateDrawerState();
 }
 
 class _TranslateDrawerState extends State<TranslateDrawer> {
+  int _drawerIndex = 0;
+
   void _onItemTapped(int index) {
     setState(() {
-      viewNav = false;
       _drawerIndex = index;
-      print("Drawer index: $_drawerIndex");
     });
+    widget.onTap(index);
   }
 
   @override
@@ -174,24 +176,49 @@ class Translator extends StatelessWidget {
   }
 }
 
-
-
-List<Widget> navpages = const [ChatPage(), CameraPage(), Translator(), History(), Favorites()];
+List<Widget> navpages = const [
+  ChatPage(),
+  CameraPage(),
+  Translator(),
+  History(),
+  Favorites()
+];
 List<Widget> drawerpages = const [Settings(), About()];
 
-class TextTranslation extends StatelessWidget {
+class TextTranslation extends StatefulWidget {
   const TextTranslation({super.key});
+
+  @override
+  State<TextTranslation> createState() => _TextTranslationState();
+}
+
+class _TextTranslationState extends State<TextTranslation> {
+  int _navIndex = 2;
+  int _drawerIndex = 0;
+  bool viewNav = true;
+
+  void updateNavIndex(int index) {
+    setState(() {
+      viewNav = true;
+      _navIndex = index;
+    });
+  }
+
+  void updateDrawerIndex(int index) {
+    setState(() {
+      viewNav = false;
+      _drawerIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: const TranslateAppBar(),
-      drawer: const TranslateDrawer(),
-      bottomNavigationBar: const TranslateBottomNavBar(),
-      body: viewNav
-          ? navpages[_navIndex]
-          : drawerpages[_drawerIndex],
+      drawer: TranslateDrawer(onTap: updateDrawerIndex),
+      bottomNavigationBar: TranslateBottomNavBar(onTap: updateNavIndex),
+      body: viewNav ? navpages[_navIndex] : drawerpages[_drawerIndex],
     );
   }
 }
