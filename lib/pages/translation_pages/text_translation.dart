@@ -64,7 +64,7 @@ class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
           label: "Chat",
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.camera),
+          icon: Icon(Icons.camera_alt),
           label: "Camera",
         ),
         BottomNavigationBarItem(
