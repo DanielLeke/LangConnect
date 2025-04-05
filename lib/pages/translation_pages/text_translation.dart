@@ -9,6 +9,7 @@ class TextTranslation extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: const TranslateAppBar(),
+      bottomNavigationBar: const TranslateBottomNavBar(),
     );
   }
 }
@@ -31,6 +32,54 @@ class TranslateAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Colors.white,
         ),
       ),
+    );
+  }
+}
+
+class TranslateBottomNavBar extends StatefulWidget {
+  const TranslateBottomNavBar({super.key});
+
+  @override
+  State<TranslateBottomNavBar> createState() => _TranslateBottomNavBarState();
+}
+
+class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
+  int _selectedIndex = 2;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      unselectedItemColor: Colors.black,
+      selectedItemColor: Colors.blue[900],
+      currentIndex: _selectedIndex,
+      backgroundColor: Colors.grey[200],
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.mic,),
+          label: "Chat",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.camera),
+          label: "Camera",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.translate_sharp),
+          label: "Translate",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.history_rounded),
+          label: "History",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: "Favorites",
+        )
+      ]
     );
   }
 }

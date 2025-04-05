@@ -151,6 +151,8 @@ class LoginBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ButtonStyle(
+          overlayColor: WidgetStatePropertyAll(Colors.white.withOpacity(0.3)),
+          animationDuration: const Duration(milliseconds: 500),
           shadowColor: WidgetStatePropertyAll(Colors.grey[300]),
           elevation: const WidgetStatePropertyAll(5),
           backgroundColor: WidgetStatePropertyAll(Colors.blue[900]),
