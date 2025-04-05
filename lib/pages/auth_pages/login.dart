@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:langconnect/pages/auth_pages/signup.dart';
+import 'package:langconnect/pages/translation_pages/text_translation.dart';
 import 'package:langconnect/utilities/authservice.dart';
+import 'package:langconnect/utilities/users_service.dart';
 
-TextEditingController emailController = TextEditingController();
+TextEditingController _emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
 
 class Login extends StatelessWidget {
@@ -161,8 +164,15 @@ class LoginBtn extends StatelessWidget {
           String message = await _authService.signin(
               email: emailController.text, password: passwordController.text);
           print(message);
-          if (message == "Success") {}
-          else {
+          if (message == "Success") {
+            UsersService _usersService = UsersService();
+            await _usersService.addUser(
+                email: _emailController.text, username: usernameController.text);
+            Navigator.pushReplacement(
+              context, 
+              MaterialPageRoute(builder: (_) => const TextTranslation())
+            );
+          } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(message),
               duration: const Duration(seconds: 2),
