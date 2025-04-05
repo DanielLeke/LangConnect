@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+int _mainIndex = 1;
 int _selectedIndex = 2;
 List<List<Widget>> pages = [
   [],
@@ -12,8 +13,9 @@ class TextTranslation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[300],
       appBar: const TranslateAppBar(),
+      drawer: const TranslateDrawer(),
       bottomNavigationBar: const TranslateBottomNavBar(),
     );
   }
@@ -28,6 +30,7 @@ class TranslateAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      foregroundColor: Colors.white,
       backgroundColor: Colors.blue[900],
       title: const Text(
         "Language Translator",
@@ -51,6 +54,7 @@ class TranslateBottomNavBar extends StatefulWidget {
 class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
   void _onItemTapped(int index) {
     setState(() {
+      _mainIndex = 1;
       _selectedIndex = index;
     });
   }
@@ -109,6 +113,7 @@ class _TranslateDrawerState extends State<TranslateDrawer> {
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
+      _mainIndex = 0;
       _selectedIndex = index;
     });
   }
@@ -126,14 +131,17 @@ class _TranslateDrawerState extends State<TranslateDrawer> {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text(
+              children: [
+                Text(
                   "Language Translator",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
-                ), SizedBox(height: 10), Text(
+                ),
+                SizedBox(height: 10),
+                Text(
                   "Translate your text easily",
                   style: TextStyle(
                     fontSize: 15,
@@ -145,20 +153,20 @@ class _TranslateDrawerState extends State<TranslateDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.settings),
-            selected: _selectedIndex == 0,
+            selected: _selectedIndex == 1,
             selectedColor: Colors.blue[900],
             title: const Text("Settings"),
             onTap: () {
-              _onItemTapped(0);
+              _onItemTapped(1);
             },
           ),
           ListTile(
             leading: const Icon(Icons.info),
             title: const Text("About"),
-            selected: _selectedIndex == 1,
+            selected: _selectedIndex == 2,
             selectedColor: Colors.blue[900],
             onTap: () {
-              _onItemTapped(1);
+              _onItemTapped(2);
             },
           ),
         ],
