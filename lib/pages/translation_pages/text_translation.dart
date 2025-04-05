@@ -101,13 +101,15 @@ class TranslateDrawer extends StatefulWidget {
 }
 
 class _TranslateDrawerState extends State<TranslateDrawer> {
-  int _drawerIndex = 0;
+  // Change the initial value to -1 to indicate no selection
+  int _drawerIndex = -1;
 
   void _onItemTapped(int index) {
     setState(() {
       _drawerIndex = index;
     });
     widget.onTap(index);
+    Navigator.pop(context); // Close drawer after selection
   }
 
   @override
