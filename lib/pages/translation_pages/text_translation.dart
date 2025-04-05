@@ -101,15 +101,32 @@ class TranslateDrawer extends StatefulWidget {
 }
 
 class _TranslateDrawerState extends State<TranslateDrawer> {
-  // Change the initial value to -1 to indicate no selection
   int _drawerIndex = -1;
 
   void _onItemTapped(int index) {
     setState(() {
       _drawerIndex = index;
     });
-    widget.onTap(index);
-    Navigator.pop(context); // Close drawer after selection
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.blue[900],
+            foregroundColor: Colors.white,
+            title: Text(
+              index == 0 ? "Settings" : "About",
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          body: drawerpages[index],
+        ),
+      ),
+    );
   }
 
   @override
@@ -196,20 +213,10 @@ class TextTranslation extends StatefulWidget {
 
 class _TextTranslationState extends State<TextTranslation> {
   int _navIndex = 2;
-  int _drawerIndex = 0;
-  bool viewNav = true;
 
   void updateNavIndex(int index) {
     setState(() {
-      viewNav = true;
       _navIndex = index;
-    });
-  }
-
-  void updateDrawerIndex(int index) {
-    setState(() {
-      viewNav = false;
-      _drawerIndex = index;
     });
   }
 
@@ -218,9 +225,9 @@ class _TextTranslationState extends State<TextTranslation> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: const TranslateAppBar(),
-      drawer: TranslateDrawer(onTap: updateDrawerIndex),
+      drawer: TranslateDrawer(onTap: (index) {}),
       bottomNavigationBar: TranslateBottomNavBar(onTap: updateNavIndex),
-      body: viewNav ? navpages[_navIndex] : drawerpages[_drawerIndex],
+      body: navpages[_navIndex],
     );
   }
 }
