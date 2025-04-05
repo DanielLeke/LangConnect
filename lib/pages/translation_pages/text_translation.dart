@@ -111,6 +111,7 @@ class _TranslateDrawerState extends State<TranslateDrawer> {
       context,
       MaterialPageRoute(
         builder: (context) => Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.blue[900],
             foregroundColor: Colors.white,
