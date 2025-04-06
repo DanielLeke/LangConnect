@@ -92,9 +92,8 @@ class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
 }
 
 class TranslateDrawer extends StatefulWidget {
-  final Function(int) onTap;
 
-  const TranslateDrawer({super.key, required this.onTap});
+  const TranslateDrawer({super.key});
 
   @override
   State<TranslateDrawer> createState() => _TranslateDrawerState();
@@ -192,7 +191,17 @@ class Translator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Translator");
+    return ListView(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            
+          ),
+          child: Row(),
+        ),
+      ],
+    );
   }
 }
 
@@ -226,7 +235,7 @@ class _TextTranslationState extends State<TextTranslation> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: const TranslateAppBar(),
-      drawer: TranslateDrawer(onTap: (index) {}),
+      drawer: const TranslateDrawer(),
       bottomNavigationBar: TranslateBottomNavBar(onTap: updateNavIndex),
       body: navpages[_navIndex],
     );
