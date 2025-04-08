@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^5.5.2
   translator: ^1.0.3+1
   cloud_firestore: ^5.6.6
+  country_flags: ^3.2.0
 
 dev_dependencies:
   flutter_test:

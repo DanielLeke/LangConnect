@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:country_flags/country_flags.dart';
 
 class Translator extends StatefulWidget {
   const Translator({super.key});
@@ -8,8 +9,28 @@ class Translator extends StatefulWidget {
 }
 
 class _TranslatorState extends State<Translator> {
-  Map<String, IconData> langIcons = {
-    
+  Map<String, String> langFlags = {
+    "English": "GB",
+    "Spanish": "ES",
+    "French": "FR",
+    "German": "DE",
+    "Italian": "IT",
+    "Portuguese": "PT",
+    "Russian": "RU",
+    "Chinese": "CN",
+    "Japanese": "JP",
+    "Korean": "KR",
+    "Arabic": "SA",
+    "Hindi": "IN",
+    "Bengali": "BD",
+    "Urdu": "PK",
+    "Turkish": "TR",
+    "Vietnamese": "VN",
+    "Thai": "TH",
+    "Indonesian": "ID",
+    "Malay": "MY",
+    "Filipino": "PH",
+    "Swahili": "TZ",
   };
   List<String> languages = [
     "English",
@@ -63,17 +84,36 @@ class _TranslatorState extends State<Translator> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  DropdownButton(
-                    items: languages.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    icon: const SizedBox.shrink(),
-                    underline: Container(),
-                    value: selectedValueOne,
-                    onChanged: _onChangedFirst,
+                  Flexible(
+                    child: DropdownButton(
+                      items: languages.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Row(
+                            children: [
+                              CountryFlag.fromCountryCode(
+                                langFlags[value]!,
+                                height: 24,
+                                width: 24,
+                                shape: const Circle(),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                value,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                      icon: const SizedBox.shrink(),
+                      underline: Container(),
+                      value: selectedValueOne,
+                      onChanged: _onChangedFirst,
+                    ),
                   ),
                   const SizedBox(width: 10),
                   IconButton(
@@ -88,18 +128,38 @@ class _TranslatorState extends State<Translator> {
                         Icons.swap_horiz,
                         color: Colors.blue[900],
                       )),
-                  const SizedBox(width: 10),
-                  DropdownButton(
-                    items: languages.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    icon: const SizedBox.shrink(),
-                    underline: Container(),
-                    value: selectedValue,
-                    onChanged: _onChanged,
+                  const SizedBox(width: 11),
+                  Flexible(
+                    child: DropdownButton(
+                      items: languages.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Row(
+                            children: [
+                              Text(
+                                value,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              CountryFlag.fromCountryCode(
+                                langFlags[value]!,
+                                height: 24,
+                                width: 24,
+                                shape: const Circle(),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                      icon: null,
+                      iconSize: 0,
+                      underline: Container(),
+                      value: selectedValue,
+                      onChanged: _onChanged,
+                    ),
                   ),
                 ],
               ),
