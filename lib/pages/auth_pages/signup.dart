@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:langconnect/pages/auth_pages/login.dart';
-import 'package:langconnect/pages/translation_pages/home_view.dart';
+import 'package:langconnect/home_view.dart';
 import 'package:langconnect/utilities/authservice.dart';
 import 'package:langconnect/utilities/users_service.dart';
 
