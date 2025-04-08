@@ -91,14 +91,14 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
   }
 }
 
-class TranslateDrawer extends StatefulWidget {
-  const TranslateDrawer({super.key});
+class HomeDrawer extends StatefulWidget {
+  const HomeDrawer({super.key});
 
   @override
-  State<TranslateDrawer> createState() => _TranslateDrawerState();
+  State<HomeDrawer> createState() => _HomeDrawerState();
 }
 
-class _TranslateDrawerState extends State<TranslateDrawer> {
+class _HomeDrawerState extends State<HomeDrawer> {
   int _drawerIndex = -1;
 
   void _onItemTapped(int index) {
@@ -313,7 +313,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: const HomeAppBar(),
-      drawer: const TranslateDrawer(),
+      drawer: const HomeDrawer(),
       bottomNavigationBar: HomeBottomNavBar(onTap: updateNavIndex),
       body: navpages[_navIndex],
     );
