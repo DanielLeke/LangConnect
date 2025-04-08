@@ -72,7 +72,13 @@ class _TranslatorState extends State<Translator> {
                   ),
                   const SizedBox(width: 10),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        String temp = selectedValueOne;
+                        setState(() {
+                          selectedValueOne = selectedValue;
+                          selectedValue = temp;
+                        });
+                      },
                       icon: Icon(
                         Icons.swap_horiz,
                         color: Colors.blue[900],
