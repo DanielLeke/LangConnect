@@ -8,6 +8,9 @@ class Translator extends StatefulWidget {
 }
 
 class _TranslatorState extends State<Translator> {
+  Map<String, IconData> langIcons = {
+    
+  };
   List<String> languages = [
     "English",
     "Spanish",
@@ -53,7 +56,8 @@ class _TranslatorState extends State<Translator> {
           padding: const EdgeInsets.all(24.0),
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(28)),
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(28)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -66,8 +70,9 @@ class _TranslatorState extends State<Translator> {
                         child: Text(value),
                       );
                     }).toList(),
+                    icon: const SizedBox.shrink(),
+                    underline: Container(),
                     value: selectedValueOne,
-                    underline: null,
                     onChanged: _onChangedFirst,
                   ),
                   const SizedBox(width: 10),
@@ -91,6 +96,8 @@ class _TranslatorState extends State<Translator> {
                         child: Text(value),
                       );
                     }).toList(),
+                    icon: const SizedBox.shrink(),
+                    underline: Container(),
                     value: selectedValue,
                     onChanged: _onChanged,
                   ),
