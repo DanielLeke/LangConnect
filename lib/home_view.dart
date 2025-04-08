@@ -5,6 +5,7 @@ import 'package:langconnect/pages/others/history.dart';
 import 'package:langconnect/pages/others/settings.dart';
 import 'package:langconnect/pages/translation_pages/camera_page.dart';
 import 'package:langconnect/pages/translation_pages/chat_page.dart';
+import 'package:langconnect/pages/translation_pages/text_translator.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
@@ -136,7 +137,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         padding: EdgeInsets.zero,
         children: [
           const DrawerHeader(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: Colors.blue,
             ),
             child: Column(
@@ -185,103 +186,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   }
 }
 
-class Translator extends StatefulWidget {
-  const Translator({super.key});
 
-  @override
-  State<Translator> createState() => _TranslatorState();
-}
-
-class _TranslatorState extends State<Translator> {
-  List<String> languages = [
-    "English",
-    "Spanish",
-    "French",
-    "German",
-    "Italian",
-    "Portuguese",
-    "Russian",
-    "Chinese",
-    "Japanese",
-    "Korean",
-    "Arabic",
-    "Hindi",
-    "Bengali",
-    "Urdu",
-    "Turkish",
-    "Vietnamese",
-    "Thai",
-    "Indonesian",
-    "Malay",
-    "Filipino",
-    "Swahili",
-  ];
-  String selectedValueOne = "English";
-  String selectedValue = "English";
-  void _onChangedFirst(String? value) {
-    setState(() {
-      selectedValueOne = value!;
-    });
-  }
-
-  void _onChanged(String? value) {
-    setState(() {
-      selectedValue = value!;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(28)),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  DropdownButton(
-                    items: languages.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    value: selectedValueOne,
-                    underline: null,
-                    onChanged: _onChangedFirst,
-                  ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.swap_horiz,
-                        color: Colors.blue[900],
-                      )),
-                  const SizedBox(width: 10),
-                  DropdownButton(
-                    items: languages.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    value: selectedValue,
-                    onChanged: _onChanged,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 List<Widget> navpages = const [
   ChatPage(),
