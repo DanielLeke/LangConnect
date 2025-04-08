@@ -6,8 +6,8 @@ import 'package:langconnect/pages/others/settings.dart';
 import 'package:langconnect/pages/translation_pages/camera_page.dart';
 import 'package:langconnect/pages/translation_pages/chat_page.dart';
 
-class TranslateAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TranslateAppBar({super.key});
+class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const HomeAppBar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -29,16 +29,16 @@ class TranslateAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-class TranslateBottomNavBar extends StatefulWidget {
+class HomeBottomNavBar extends StatefulWidget {
   final Function(int) onTap;
 
-  const TranslateBottomNavBar({super.key, required this.onTap});
+  const HomeBottomNavBar({super.key, required this.onTap});
 
   @override
-  State<TranslateBottomNavBar> createState() => _TranslateBottomNavBarState();
+  State<HomeBottomNavBar> createState() => _HomeBottomNavBarState();
 }
 
-class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
+class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
   int _navIndex = 2;
 
   void _onItemTapped(int index) {
@@ -92,7 +92,6 @@ class _TranslateBottomNavBarState extends State<TranslateBottomNavBar> {
 }
 
 class TranslateDrawer extends StatefulWidget {
-
   const TranslateDrawer({super.key});
 
   @override
@@ -224,6 +223,7 @@ class _TranslatorState extends State<Translator> {
       selectedValueOne = value!;
     });
   }
+
   void _onChanged(String? value) {
     setState(() {
       selectedValue = value!;
@@ -238,9 +238,7 @@ class _TranslatorState extends State<Translator> {
           padding: const EdgeInsets.all(24.0),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(28)
-            ),
+                color: Colors.white, borderRadius: BorderRadius.circular(28)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -255,10 +253,15 @@ class _TranslatorState extends State<Translator> {
                     }).toList(),
                     value: selectedValueOne,
                     underline: null,
-                    onChanged:_onChangedFirst,
+                    onChanged: _onChangedFirst,
                   ),
                   const SizedBox(width: 10),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.swap_horiz, color: Colors.blue[900],)),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.swap_horiz,
+                        color: Colors.blue[900],
+                      )),
                   const SizedBox(width: 10),
                   DropdownButton(
                     items: languages.map((String value) {
@@ -268,7 +271,7 @@ class _TranslatorState extends State<Translator> {
                       );
                     }).toList(),
                     value: selectedValue,
-                    onChanged:_onChanged,
+                    onChanged: _onChanged,
                   ),
                 ],
               ),
@@ -289,14 +292,14 @@ List<Widget> navpages = const [
 ];
 List<Widget> drawerpages = const [Settings(), About()];
 
-class TextTranslation extends StatefulWidget {
-  const TextTranslation({super.key});
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
 
   @override
-  State<TextTranslation> createState() => _TextTranslationState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _TextTranslationState extends State<TextTranslation> {
+class _HomeViewState extends State<HomeView> {
   int _navIndex = 2;
 
   void updateNavIndex(int index) {
@@ -309,9 +312,9 @@ class _TextTranslationState extends State<TextTranslation> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: const TranslateAppBar(),
+      appBar: const HomeAppBar(),
       drawer: const TranslateDrawer(),
-      bottomNavigationBar: TranslateBottomNavBar(onTap: updateNavIndex),
+      bottomNavigationBar: HomeBottomNavBar(onTap: updateNavIndex),
       body: navpages[_navIndex],
     );
   }

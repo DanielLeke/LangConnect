@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:langconnect/pages/auth_pages/signup.dart';
-import 'package:langconnect/pages/translation_pages/text_translation.dart';
+import 'package:langconnect/pages/translation_pages/home_view.dart';
 import 'package:langconnect/utilities/authservice.dart';
 import 'package:langconnect/utilities/users_service.dart';
 
@@ -168,13 +168,13 @@ class LoginBtn extends StatelessWidget {
           print(message);
           if (message == "Success") {
             UsersService _usersService = UsersService();
-            String username = await _usersService.getUserInformation(email: _emailController.text, field: "username");
+            String username = await _usersService.getUserInformation(
+                email: _emailController.text, field: "username");
             print(username);
             await _usersService.addUser(
-                email: _emailController.text,
-                username: username);
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (_) => const TextTranslation()));
+                email: _emailController.text, username: username);
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (_) => const HomeView()));
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(message),
@@ -220,7 +220,8 @@ class LoginBottomNavBar extends StatelessWidget {
           ),
           TextButton(
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const Signup()));
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (_) => const Signup()));
               },
               child: Text(
                 "Sign Up",

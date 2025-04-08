@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:langconnect/pages/auth_pages/login.dart';
-import 'package:langconnect/pages/translation_pages/text_translation.dart';
+import 'package:langconnect/pages/translation_pages/home_view.dart';
 import 'package:langconnect/utilities/authservice.dart';
 import 'package:langconnect/utilities/users_service.dart';
 
@@ -219,9 +219,7 @@ class SignupBtn extends StatelessWidget {
             await _usersService.addUser(
                 email: emailController.text, username: usernameController.text);
             Navigator.pushReplacement(
-              context, 
-              MaterialPageRoute(builder: (_) => const TextTranslation())
-            );
+                context, MaterialPageRoute(builder: (_) => const HomeView()));
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(message),
