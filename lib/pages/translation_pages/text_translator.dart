@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:country_flags/country_flags.dart';
 
@@ -9,6 +11,30 @@ class Translator extends StatefulWidget {
 }
 
 class _TranslatorState extends State<Translator> {
+  Map<String, String> langcodes = {
+    "English": "en",
+    "Spanish": "es",
+    "French": "fr",
+    "German": "de",
+    "Italian": "it",
+    "Portuguese": "pt",
+    "Russian": "ru",
+    "Chinese": "zh-cn",
+    "Japanese": "ja",
+    "Korean": "ko",
+    "Arabic": "ar",
+    "Hindi": "hi",
+    "Bengali": "bn",
+    "Urdu": "ur",
+    "Turkish": "tr",
+    "Vietnamese": "vi",
+    "Thai": "th",
+    "Indonesian": "id",
+    "Malay": "ms",
+    "Filipino": "tl",
+    "Swahili": "sw",
+    "Persian": "fa",
+  };
   Map<String, String> langFlags = {
     "English": "GB",
     "Spanish": "ES",
@@ -218,5 +244,20 @@ class LanguageSelectionRow extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class UntranslatedTextInput extends StatelessWidget {
+  final String language;
+  final Map<String, String> langMaps;
+  const UntranslatedTextInput({
+    super.key,
+    required this.language,
+    required this.langMaps,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
