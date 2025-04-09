@@ -168,6 +168,7 @@ class LanguageSelectionRow extends StatelessWidget {
           icon: Icon(
             Icons.swap_horiz,
             color: Colors.blue[900],
+            size: 30,
           ),
         ),
         const SizedBox(width: 11),
