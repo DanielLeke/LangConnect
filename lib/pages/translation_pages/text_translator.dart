@@ -69,6 +69,14 @@ class _TranslatorState extends State<Translator> {
     });
   }
 
+  void _onSwap() {
+    String temp = selectedValueOne;
+    setState(() {
+      selectedValueOne = selectedValue;
+      selectedValue = temp;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -81,91 +89,120 @@ class _TranslatorState extends State<Translator> {
                 borderRadius: BorderRadius.circular(28)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Flexible(
-                    child: DropdownButton(
-                      items: languages.map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Row(
-                            children: [
-                              CountryFlag.fromCountryCode(
-                                langFlags[value]!,
-                                height: 24,
-                                width: 24,
-                                shape: const Circle(),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                value,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                      icon: const SizedBox.shrink(),
-                      underline: Container(),
-                      value: selectedValueOne,
-                      onChanged: _onChangedFirst,
+              child: LanguageSelectionRow(
+                languages: languages,
+                langFlags: langFlags,
+                selectedValueOne: selectedValueOne,
+                selectedValue: selectedValue,
+                onChangedFirst: _onChangedFirst,
+                onChangedSecond: _onChanged,
+                onSwap: _onSwap,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class LanguageSelectionRow extends StatelessWidget {
+  final List<String> languages;
+  final Map<String, String> langFlags;
+  final String selectedValueOne;
+  final String selectedValue;
+  final ValueChanged<String?> onChangedFirst;
+  final ValueChanged<String?> onChangedSecond;
+  final VoidCallback onSwap;
+
+  const LanguageSelectionRow({
+    super.key,
+    required this.languages,
+    required this.langFlags,
+    required this.selectedValueOne,
+    required this.selectedValue,
+    required this.onChangedFirst,
+    required this.onChangedSecond,
+    required this.onSwap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Flexible(
+          child: DropdownButton(
+            items: languages.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Row(
+                  children: [
+                    CountryFlag.fromCountryCode(
+                      langFlags[value]!,
+                      height: 24,
+                      width: 24,
+                      shape: const Circle(),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                      onPressed: () {
-                        String temp = selectedValueOne;
-                        setState(() {
-                          selectedValueOne = selectedValue;
-                          selectedValue = temp;
-                        });
-                      },
-                      icon: Icon(
-                        Icons.swap_horiz,
-                        color: Colors.blue[900],
-                      )),
-                  const SizedBox(width: 11),
-                  Flexible(
-                    child: Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: DropdownButton(
-                        items: languages.map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Row(
-                              children: [
-                                CountryFlag.fromCountryCode(
-                                  langFlags[value]!,
-                                  height: 24,
-                                  width: 24,
-                                  shape: const Circle(),
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  value,
-                                  style: const TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                        icon: null,
-                        iconSize: 0,
-                        underline: Container(),
-                        value: selectedValue,
-                        onChanged: _onChanged,
+                    const SizedBox(width: 8),
+                    Text(
+                      value,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
                       ),
                     ),
+                  ],
+                ),
+              );
+            }).toList(),
+            icon: const SizedBox.shrink(),
+            underline: Container(),
+            value: selectedValueOne,
+            onChanged: onChangedFirst,
+          ),
+        ),
+        const SizedBox(width: 10),
+        IconButton(
+          onPressed: onSwap,
+          icon: Icon(
+            Icons.swap_horiz,
+            color: Colors.blue[900],
+          ),
+        ),
+        const SizedBox(width: 11),
+        Flexible(
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: DropdownButton(
+              items: languages.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Row(
+                    children: [
+                      CountryFlag.fromCountryCode(
+                        langFlags[value]!,
+                        height: 24,
+                        width: 24,
+                        shape: const Circle(),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        value,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              }).toList(),
+              icon: null,
+              iconSize: 0,
+              underline: Container(),
+              value: selectedValue,
+              onChanged: onChangedSecond,
             ),
           ),
         ),
