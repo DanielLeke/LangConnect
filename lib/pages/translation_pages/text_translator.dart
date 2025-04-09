@@ -130,35 +130,38 @@ class _TranslatorState extends State<Translator> {
                       )),
                   const SizedBox(width: 11),
                   Flexible(
-                    child: DropdownButton(
-                      items: languages.map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Row(
-                            children: [
-                              Text(
-                                value,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
+                    child: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: DropdownButton(
+                        items: languages.map((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Row(
+                              children: [
+                                CountryFlag.fromCountryCode(
+                                  langFlags[value]!,
+                                  height: 24,
+                                  width: 24,
+                                  shape: const Circle(),
                                 ),
-                              ),
-                              const SizedBox(width: 8),
-                              CountryFlag.fromCountryCode(
-                                langFlags[value]!,
-                                height: 24,
-                                width: 24,
-                                shape: const Circle(),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                      icon: null,
-                      iconSize: 0,
-                      underline: Container(),
-                      value: selectedValue,
-                      onChanged: _onChanged,
+                                const SizedBox(width: 8),
+                                Text(
+                                  value,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        icon: null,
+                        iconSize: 0,
+                        underline: Container(),
+                        value: selectedValue,
+                        onChanged: _onChanged,
+                      ),
                     ),
                   ),
                 ],
