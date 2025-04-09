@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:country_flags/country_flags.dart';
+import 'package:langconnect/utilities/translation_service.dart';
 
 class Translator extends StatefulWidget {
   const Translator({super.key});
@@ -83,6 +84,7 @@ class _TranslatorState extends State<Translator> {
   ];
   String selectedValueOne = "English";
   String selectedValue = "English";
+  String? translatedTextHolder;
   void _onChangedFirst(String? value) {
     setState(() {
       selectedValueOne = value!;
@@ -102,6 +104,19 @@ class _TranslatorState extends State<Translator> {
       selectedValue = temp;
     });
   }
+
+  void _translateText() async {
+    String textToTranslate = inputController.text;
+    String targetLanguage = langcodes[selectedValue]!;
+    String translatedText =
+        await TranslationService().translate(textToTranslate, targetLanguage);
+    setState(() {
+      translatedTextHolder = translatedText;
+    });
+    print("Translated Text: $translatedTextHolder");
+  }
+
+  TextEditingController inputController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +151,13 @@ class _TranslatorState extends State<Translator> {
             ),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: UntranslatedTextInput(
+              language: selectedValueOne,
+              controller: inputController,
+              onTranslate: _translateText),
+        )
       ],
     );
   }
@@ -249,15 +271,77 @@ class LanguageSelectionRow extends StatelessWidget {
 
 class UntranslatedTextInput extends StatelessWidget {
   final String language;
-  final Map<String, String> langMaps;
+  final TextEditingController controller;
+  final VoidCallback onTranslate;
   const UntranslatedTextInput({
     super.key,
     required this.language,
-    required this.langMaps,
+    required this.controller,
+    required this.onTranslate,
   });
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3), // changes position of shadow
+          )
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.topLeft,
+              child: Text(
+                language,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.blue[900],
+                ),
+              ),
+            ),
+            TextField(
+              maxLines: 5,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Enter text to translate',
+              ),
+              cursorColor: Colors.black,
+              controller: controller,
+            ),
+            const SizedBox(height: 10),
+            Container(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[900],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28),
+                  ),
+                ),
+                onPressed: onTranslate,
+                child: const Text(
+                  "Translate",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
