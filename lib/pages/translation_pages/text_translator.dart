@@ -86,7 +86,16 @@ class _TranslatorState extends State<Translator> {
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(28)),
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  )
+                ],
+            ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: LanguageSelectionRow(
