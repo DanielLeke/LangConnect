@@ -326,6 +326,7 @@ class UntranslatedTextInput extends StatelessWidget {
               ),
               cursorColor: Colors.black,
               controller: controller,
+              textCapitalization: TextCapitalization.sentences,
             ),
             Container(
               alignment: Alignment.bottomRight,
