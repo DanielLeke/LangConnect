@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:langconnect/pages/others/about.dart';
 import 'package:langconnect/pages/others/favorites.dart';
 import 'package:langconnect/pages/others/history.dart';
-import 'package:langconnect/pages/others/settings.dart';
+import 'package:langconnect/pages/others/profile.dart';
 import 'package:langconnect/pages/translation_pages/camera_page.dart';
 import 'package:langconnect/pages/translation_pages/chat_page.dart';
 import 'package:langconnect/pages/translation_pages/text_translator.dart';
@@ -115,7 +115,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             backgroundColor: Colors.blue[900],
             foregroundColor: Colors.white,
             title: Text(
-              index == 0 ? "Settings" : "About",
+              index == 0 ? "Profile" : "About",
               style: const TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
@@ -166,7 +166,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             leading: const Icon(Icons.settings),
             selected: _drawerIndex == 0,
             selectedColor: Colors.blue[900],
-            title: const Text("Settings"),
+            title: const Text("Profile"),
             onTap: () {
               _onItemTapped(0);
             },
@@ -195,7 +195,7 @@ List<Widget> navpages = const [
   History(),
   Favorites()
 ];
-List<Widget> drawerpages = const [Settings(), About()];
+List<Widget> drawerpages = const [Profile(), About()];
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
