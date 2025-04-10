@@ -157,7 +157,14 @@ class _TranslatorState extends State<Translator> {
               language: selectedValueOne,
               controller: inputController,
               onTranslate: _translateText),
-        )
+        ),
+        Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: TranslatedText(
+            toTranslateLanguage: selectedValue,
+            translatedText: translatedTextHolder ?? "Translation will appear here",
+          ),
+        ),
       ],
     );
   }
@@ -323,6 +330,8 @@ class UntranslatedTextInput extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  overlayColor: Colors.white.withOpacity(0.3),
+                  animationDuration: const Duration(milliseconds: 500),
                   backgroundColor: Colors.blue[900],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(28),
@@ -338,6 +347,58 @@ class UntranslatedTextInput extends StatelessWidget {
                 ),
               ),
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TranslatedText extends StatelessWidget {
+  final String toTranslateLanguage;
+  final String translatedText;
+
+  const TranslatedText({
+    super.key,
+    required this.toTranslateLanguage,
+    required this.translatedText,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 3,
+            offset: const Offset(0, 3), // changes position of shadow
+          )
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          children: [
+            Container(
+              alignment: Alignment.topLeft,
+              child: Text(
+                toTranslateLanguage,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.blue[900],
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+              child: Text(translatedText)
+            ),
+            const SizedBox(height: 30),
           ],
         ),
       ),
