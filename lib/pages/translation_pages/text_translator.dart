@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:langconnect/utilities/translation_service.dart';
+import 'package:flutter/services.dart';
 
 class Translator extends StatefulWidget {
   const Translator({super.key});
@@ -399,6 +400,32 @@ class TranslatedText extends StatelessWidget {
               child: Text(translatedText)
             ),
             const SizedBox(height: 30),
+            Container(
+              alignment: Alignment.topRight,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: (){
+                      ClipboardData data = ClipboardData(text: translatedText);
+                      Clipboard.setData(data).then((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Text copied to clipboard!'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      });
+                    }, 
+                    icon: Icon(
+                      Icons.copy, 
+                      color: Colors.blue[900], 
+                      size: 30,
+                    )
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
