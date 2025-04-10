@@ -123,7 +123,7 @@ class _TranslatorState extends State<Translator> {
     return ListView(
       children: [
         Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.fromLTRB(24, 18, 24, 8),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.grey[200],
@@ -319,7 +319,6 @@ class UntranslatedTextInput extends StatelessWidget {
               cursorColor: Colors.black,
               controller: controller,
             ),
-            const SizedBox(height: 10),
             Container(
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
