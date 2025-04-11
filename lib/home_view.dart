@@ -109,21 +109,23 @@ class _HomeDrawerState extends State<HomeDrawer> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.blue[900],
-            foregroundColor: Colors.white,
-            title: Text(
-              index == 0 ? "Profile" : "About",
-              style: const TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+        builder: (context) => SafeArea(
+          child: Scaffold(
+            backgroundColor: index == 0 ? Colors.blue[900] : Colors.white,
+            appBar: index == 0 ? null : AppBar(
+              backgroundColor: Colors.blue[900],
+              foregroundColor: Colors.white,
+              title: const Text(
+                "About",
+                style: TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
+            body: drawerpages[index],
           ),
-          body: drawerpages[index],
         ),
       ),
     );

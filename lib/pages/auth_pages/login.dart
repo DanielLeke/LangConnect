@@ -4,7 +4,7 @@ import 'package:langconnect/home_view.dart';
 import 'package:langconnect/utilities/authservice.dart';
 import 'package:langconnect/utilities/users_service.dart';
 
-TextEditingController _emailController = TextEditingController();
+TextEditingController loginEmailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
 
 class Login extends StatelessWidget {
@@ -104,7 +104,7 @@ class EmailField extends StatelessWidget {
       ),
       cursorColor: Colors.black,
       obscureText: false,
-      controller: _emailController,
+      controller: loginEmailController,
     );
   }
 }
@@ -164,15 +164,16 @@ class LoginBtn extends StatelessWidget {
         onPressed: () async {
           Authservice _authService = Authservice();
           String message = await _authService.signin(
-              email: _emailController.text, password: passwordController.text);
+              email: loginEmailController.text,
+              password: passwordController.text);
           print(message);
           if (message == "Success") {
             UsersService _usersService = UsersService();
             String username = await _usersService.getUserInformation(
-                email: _emailController.text, field: "username");
+                email: loginEmailController.text, field: "username");
             print(username);
             await _usersService.addUser(
-                email: _emailController.text, username: username);
+                email: loginEmailController.text, username: username);
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (_) => const HomeView()));
           } else {
