@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:langconnect/pages/others/about.dart';
 import 'package:langconnect/pages/others/favorites.dart';
 import 'package:langconnect/pages/others/history.dart';
-import 'package:langconnect/pages/others/profile.dart';
+import 'package:langconnect/pages/others/profile_pages/profile.dart';
 import 'package:langconnect/pages/translation_pages/camera_page.dart';
 import 'package:langconnect/pages/translation_pages/chat_page.dart';
 import 'package:langconnect/pages/translation_pages/text_translator.dart';
