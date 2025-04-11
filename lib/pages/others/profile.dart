@@ -56,6 +56,9 @@ ${snapshot.data ?? 'Unknown User'}.
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextButton(
+                          style: TextButton.styleFrom(
+                            overlayColor: Colors.grey
+                          ),
                           onPressed: (){}, 
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,6 +82,9 @@ ${snapshot.data ?? 'Unknown User'}.
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextButton(
+                          style: TextButton.styleFrom(
+                            overlayColor: Colors.grey
+                          ),
                           onPressed: (){}, 
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
