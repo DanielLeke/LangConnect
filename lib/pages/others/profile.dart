@@ -52,58 +52,14 @@ ${snapshot.data ?? 'Unknown User'}.
                         topRight: Radius.circular(10)),
                   ),
                   child: ListView(
-                    children: [
+                    children: const[
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            overlayColor: Colors.grey
-                          ),
-                          onPressed: (){}, 
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Change password",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  letterSpacing: 1.2
-                                ),
-                              ),
-                              Icon(Icons.arrow_forward_ios_rounded,
-                                color: Colors.blue[900],
-                              )
-                            ],
-                          )
-                        ),
+                        padding: EdgeInsets.all(8.0),
+                        child: PasswordChange(),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            overlayColor: Colors.grey
-                          ),
-                          onPressed: (){}, 
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "Change email",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  letterSpacing: 1.2
-                                ),
-                              ),
-                              Icon(Icons.arrow_forward_ios_rounded,
-                                color: Colors.blue[900],
-                              )
-                            ],
-                          )
-                        ),
+                        padding: EdgeInsets.all(8.0),
+                        child: EmailChange(),
                       ),
                     ],
                   ),
@@ -113,6 +69,72 @@ ${snapshot.data ?? 'Unknown User'}.
           );
         }
       },
+    );
+  }
+}
+
+class EmailChange extends StatelessWidget {
+  const EmailChange({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        overlayColor: Colors.grey
+      ),
+      onPressed: (){}, 
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            "Change email",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              letterSpacing: 1.2
+            ),
+          ),
+          Icon(Icons.arrow_forward_ios_rounded,
+            color: Colors.blue[900],
+          )
+        ],
+      )
+    );
+  }
+}
+
+class PasswordChange extends StatelessWidget {
+  const PasswordChange({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        overlayColor: Colors.grey
+      ),
+      onPressed: (){}, 
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            "Change password",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              letterSpacing: 1.2
+            ),
+          ),
+          Icon(Icons.arrow_forward_ios_rounded,
+            color: Colors.blue[900],
+          )
+        ],
+      )
     );
   }
 }
