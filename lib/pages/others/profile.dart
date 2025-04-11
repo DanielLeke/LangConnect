@@ -61,6 +61,29 @@ ${snapshot.data ?? 'Unknown User'}.
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
+                                "Change password",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  letterSpacing: 1.2
+                                ),
+                              ),
+                              Icon(Icons.arrow_forward_ios_rounded,
+                                color: Colors.blue[900],
+                              )
+                            ],
+                          )
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                          onPressed: (){}, 
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
                                 "Change email",
                                 style: TextStyle(
                                   color: Colors.black,
@@ -75,7 +98,7 @@ ${snapshot.data ?? 'Unknown User'}.
                             ],
                           )
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
