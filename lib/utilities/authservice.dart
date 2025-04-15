@@ -60,4 +60,19 @@ class Authservice {
       await FirebaseAuth.instance.signOut();
     }
   }
+
+  Future<String> updatePassword(
+      {required String oldPassword, required String newPassword}) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      String? email = user!.email;
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email!, password: oldPassword);
+      await user.reauthenticateWithCredential(credential);
+      await user.updatePassword(newPassword);
+      return "Success";
+    } on FirebaseAuthException catch (e) {
+      return "An error occurred: ${e.message}";
+    }
+  }
 }
