@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:langconnect/pages/auth_pages/login.dart';
 import 'package:langconnect/pages/auth_pages/signup.dart';
+import 'package:langconnect/pages/others/profile_pages/change_password.dart';
 import 'package:langconnect/utilities/users_service.dart';
 
 class Profile extends StatefulWidget {
@@ -52,7 +53,7 @@ ${snapshot.data ?? 'Unknown User'}.
                         topRight: Radius.circular(10)),
                   ),
                   child: ListView(
-                    children: const[
+                    children: const [
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: PasswordChange(),
@@ -81,28 +82,25 @@ class EmailChange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      style: TextButton.styleFrom(
-        overlayColor: Colors.grey
-      ),
-      onPressed: (){}, 
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            "Change email",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              letterSpacing: 1.2
+        style: TextButton.styleFrom(overlayColor: Colors.grey),
+        onPressed: () {},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Change email",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  letterSpacing: 1.2),
             ),
-          ),
-          Icon(Icons.arrow_forward_ios_rounded,
-            color: Colors.blue[900],
-          )
-        ],
-      )
-    );
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.blue[900],
+            )
+          ],
+        ));
   }
 }
 
@@ -114,28 +112,30 @@ class PasswordChange extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      style: TextButton.styleFrom(
-        overlayColor: Colors.grey
-      ),
-      onPressed: (){}, 
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            "Change password",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              letterSpacing: 1.2
+        style: TextButton.styleFrom(overlayColor: Colors.grey),
+        onPressed: () {
+          Navigator.push(
+          context, 
+          MaterialPageRoute(builder: (_) => const ChangePassword())
+        );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Change password",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  letterSpacing: 1.2),
             ),
-          ),
-          Icon(Icons.arrow_forward_ios_rounded,
-            color: Colors.blue[900],
-          )
-        ],
-      )
-    );
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.blue[900],
+            )
+          ],
+        ));
   }
 }
 
