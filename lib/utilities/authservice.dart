@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Authservice {
@@ -70,6 +72,20 @@ class Authservice {
           EmailAuthProvider.credential(email: email!, password: oldPassword);
       await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPassword);
+      return "Success";
+    } on FirebaseAuthException catch (e) {
+      return "An error occurred: ${e.message}";
+    }
+  }
+
+  Future<String> updateEmail({required String password, required String newEmail}) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      String? oldEmail = user!.email;
+      AuthCredential credential = EmailAuthProvider.credential(
+          email: oldEmail!, password: password);
+      await user.reauthenticateWithCredential(credential);
+      await user.updateEmail(newEmail);
       return "Success";
     } on FirebaseAuthException catch (e) {
       return "An error occurred: ${e.message}";
