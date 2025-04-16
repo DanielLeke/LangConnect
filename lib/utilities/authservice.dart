@@ -78,17 +78,38 @@ class Authservice {
     }
   }
 
-  Future<String> updateEmail({required String password, required String newEmail}) async {
+  Future<String> updateEmail(
+      {required String password, required String newEmail}) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      String? oldEmail = user!.email;
+
+      if (user == null) {
+        return "User is not signed in. Please log in again.";
+      }
+
+      // Reauthenticate the user
       AuthCredential credential = EmailAuthProvider.credential(
-          email: oldEmail!, password: password);
+        email: user.email!,
+        password: password,
+      );
       await user.reauthenticateWithCredential(credential);
-      await user.updateEmail(newEmail);
+
+      // Update the email
+      await user.verifyBeforeUpdateEmail(newEmail);
+      await signin(email: newEmail, password: password);
       return "Success";
     } on FirebaseAuthException catch (e) {
-      return "An error occurred: ${e.message}";
+      if (e.code == 'wrong-password') {
+        return "The password is incorrect. Please try again.";
+      } else if (e.code == 'user-mismatch') {
+        return "The credential does not match the current user.";
+      } else if (e.code == 'invalid-credential') {
+        return "The supplied credential is invalid or malformed.";
+      } else {
+        return "An error occurred: ${e.message}";
+      }
+    } catch (e) {
+      return "An unexpected error occurred: ${e.toString()}";
     }
   }
 }

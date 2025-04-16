@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:langconnect/pages/auth_pages/login.dart';
 import 'package:langconnect/pages/auth_pages/signup.dart';
+import 'package:langconnect/pages/others/profile_pages/change_email.dart';
 import 'package:langconnect/pages/others/profile_pages/change_password.dart';
 import 'package:langconnect/utilities/users_service.dart';
 
@@ -83,7 +84,10 @@ class EmailChange extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
         style: TextButton.styleFrom(overlayColor: Colors.grey),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => const ChangeEmail()));
+        },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -115,9 +119,7 @@ class PasswordChange extends StatelessWidget {
         style: TextButton.styleFrom(overlayColor: Colors.grey),
         onPressed: () {
           Navigator.push(
-          context, 
-          MaterialPageRoute(builder: (_) => const ChangePassword())
-        );
+              context, MaterialPageRoute(builder: (_) => const ChangeEmail()));
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
