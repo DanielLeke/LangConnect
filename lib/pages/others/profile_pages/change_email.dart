@@ -186,6 +186,7 @@ class ChangeEmailBtn extends StatelessWidget {
             }
           } else {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              duration: const Duration(seconds: 7),
                 content: Text(
                     "An error occurred: $updateEmailResult. Please try again")));
           }
