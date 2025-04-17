@@ -36,43 +36,44 @@ class UsersService {
   }
 
   Future<String> updateInfo({
-  required String email,
-  required String field,
-  required String newInfo,
-}) async {
-  try {
-    if (field == 'email') {
-      // Handle email update by creating a new document
-      DocumentSnapshot oldDoc = await _firestore.collection('users').doc(email).get();
+    required String email,
+    required String field,
+    required String newInfo,
+  }) async {
+    try {
+      if (field == 'email') {
+        // Handle email update by creating a new document
+        DocumentSnapshot oldDoc =
+            await _firestore.collection('users').doc(email).get();
 
-      if (oldDoc.exists) {
-        // Copy data from the old document
-        Map<String, dynamic> userData = oldDoc.data() as Map<String, dynamic>;
-        userData['email'] = newInfo; // Update the email field
+        if (oldDoc.exists) {
+          // Copy data from the old document
+          Map<String, dynamic> userData = oldDoc.data() as Map<String, dynamic>;
+          userData['email'] = newInfo; // Update the email field
 
-        // Create a new document with the updated email as the document ID
-        await _firestore.collection('users').doc(newInfo).set(userData);
+          // Create a new document with the updated email as the document ID
+          await _firestore.collection('users').doc(newInfo).set(userData);
 
-        // Delete the old document
-        await _firestore.collection('users').doc(email).delete();
+          // Delete the old document
+          await _firestore.collection('users').doc(email).delete();
 
-        print("Email updated and document renamed successfully!");
-        return "Success";
+          print("Email updated and document renamed successfully!");
+          return "Success";
+        } else {
+          print("Old document not found");
+          return "User not found";
+        }
       } else {
-        print("Old document not found");
-        return "User not found";
+        // Update other fields normally
+        await _firestore.collection('users').doc(email).update({
+          field: newInfo,
+        });
+        print("User information updated successfully!");
+        return "Success";
       }
-    } else {
-      // Update other fields normally
-      await _firestore.collection('users').doc(email).update({
-        field: newInfo,
-      });
-      print("User information updated successfully!");
-      return "Success";
+    } catch (e) {
+      print("Error updating user information: $e");
+      return "Error updating user information";
     }
-  } catch (e) {
-    print("Error updating user information: $e");
-    return "Error updating user information";
   }
-}
 }
