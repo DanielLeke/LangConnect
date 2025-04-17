@@ -1,9 +1,13 @@
 import 'dart:core';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:country_flags/country_flags.dart';
+import 'package:langconnect/utilities/favorites_service.dart';
 import 'package:langconnect/utilities/translation_service.dart';
 import 'package:flutter/services.dart';
+
+TextEditingController inputController = TextEditingController();
 
 class Translator extends StatefulWidget {
   const Translator({super.key});
@@ -117,7 +121,6 @@ class _TranslatorState extends State<Translator> {
     print("Translated Text: $translatedTextHolder");
   }
 
-  TextEditingController inputController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +166,8 @@ class _TranslatorState extends State<Translator> {
           padding: const EdgeInsets.all(24.0),
           child: TranslatedText(
             toTranslateLanguage: selectedValue,
-            translatedText: translatedTextHolder ?? "Translation will appear here",
+            translatedText:
+                translatedTextHolder ?? "Translation will appear here",
           ),
         ),
       ],
@@ -397,33 +401,15 @@ class TranslatedText extends StatelessWidget {
               ),
             ),
             Container(
-              alignment: Alignment.topLeft,
-              child: Text(translatedText)
-            ),
+                alignment: Alignment.topLeft, child: Text(translatedText)),
             const SizedBox(height: 30),
             Container(
               alignment: Alignment.topRight,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(
-                    onPressed: (){
-                      ClipboardData data = ClipboardData(text: translatedText);
-                      Clipboard.setData(data).then((_) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Text copied to clipboard!'),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                      });
-                    }, 
-                    icon: Icon(
-                      Icons.copy, 
-                      color: Colors.blue[900], 
-                      size: 30,
-                    )
-                  ),
+                  CopyBtn(translatedText: translatedText),
+                  FavoritesBtn(translatedText: translatedText, originalText: inputController.text,)
                 ],
               ),
             ),
@@ -431,5 +417,74 @@ class TranslatedText extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class CopyBtn extends StatelessWidget {
+  const CopyBtn({
+    super.key,
+    required this.translatedText,
+  });
+
+  final String translatedText;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          ClipboardData data = ClipboardData(text: translatedText);
+          Clipboard.setData(data).then((_) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Text copied to clipboard!'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          });
+        },
+        icon: Icon(
+          Icons.copy,
+          color: Colors.blue[900],
+          size: 30,
+        ));
+  }
+}
+
+class FavoritesBtn extends StatelessWidget {
+  const FavoritesBtn({
+    super.key,
+    required this.translatedText,
+    required this.originalText,
+  });
+
+  final String translatedText;
+  final String originalText;
+
+  @override
+  Widget build(BuildContext context) {
+    IconData icon = Icons.favorite_outline;
+
+    return IconButton(
+        onPressed: () async {
+          User? user = FirebaseAuth.instance.currentUser;
+          String email = user!.email!;
+          FavoritesService _favoritesService = FavoritesService();
+          await _favoritesService.addToFavorites(email, {
+            "originalText": originalText,
+            "translatedText": translatedText,
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Text added to favorites!'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+          icon = Icons.favorite;
+        },
+        icon: Icon(
+          icon,
+          color: Colors.blue[900],
+          size: 30,
+        ));
   }
 }
