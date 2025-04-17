@@ -119,7 +119,7 @@ class PasswordChange extends StatelessWidget {
         style: TextButton.styleFrom(overlayColor: Colors.grey),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const ChangeEmail()));
+              context, MaterialPageRoute(builder: (_) => const ChangePassword()));
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
