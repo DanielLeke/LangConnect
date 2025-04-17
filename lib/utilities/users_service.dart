@@ -76,4 +76,17 @@ class UsersService {
       return "Error updating user information";
     }
   }
+
+  Future<String> addInfo({required String email, required String field, required String info}) async {
+    try {
+      await _firestore.collection('users').doc(email).update({
+        field: info,
+      });
+      print("User information added successfully!");
+      return "Success";
+    } catch (e) {
+      print("Error adding user information: $e");
+      return "Error adding user information";
+    }
+  }
 }
