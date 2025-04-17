@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:langconnect/pages/auth_pages/login.dart';
 import 'package:langconnect/pages/auth_pages/signup.dart';
 import 'package:langconnect/pages/others/profile_pages/change_email.dart';
 import 'package:langconnect/pages/others/profile_pages/change_password.dart';
+import 'package:langconnect/utilities/authservice.dart';
 import 'package:langconnect/utilities/users_service.dart';
 
 class Profile extends StatefulWidget {
@@ -63,6 +65,10 @@ ${snapshot.data ?? 'Unknown User'}.
                         padding: EdgeInsets.all(8.0),
                         child: EmailChange(),
                       ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Signout(),
+                      )
                     ],
                   ),
                 ),
@@ -118,8 +124,8 @@ class PasswordChange extends StatelessWidget {
     return TextButton(
         style: TextButton.styleFrom(overlayColor: Colors.grey),
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => const ChangePassword()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (_) => const ChangePassword()));
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,12 +147,54 @@ class PasswordChange extends StatelessWidget {
   }
 }
 
+class Signout extends StatelessWidget {
+  const Signout({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        style: TextButton.styleFrom(overlayColor: Colors.grey),
+        onPressed: () async {
+          Authservice _authService = Authservice();
+          await _authService.signout();
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (_) => const Signup()));
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Signout",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  letterSpacing: 1.2),
+            ),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.blue[900],
+            )
+          ],
+        ));
+  }
+}
+
 Future<String> getUsername() async {
   UsersService _usersService = UsersService();
-  String username = await _usersService.getUserInformation(
-      email: emailController.text.isNotEmpty
-          ? emailController.text
-          : loginEmailController.text,
-      field: "username");
+  User? user = FirebaseAuth.instance.currentUser;
+  late String username;
+  if (emailController.text.isNotEmpty) {
+    username = await _usersService.getUserInformation(
+        email: emailController.text, field: "username");
+  } else if (loginEmailController.text.isNotEmpty) {
+    username = await _usersService.getUserInformation(
+        email: loginEmailController.text, field: "username");
+  } else {
+    username = await _usersService.getUserInformation(
+        email: user!.email ?? '', field: "username");
+  }
   return username;
 }
