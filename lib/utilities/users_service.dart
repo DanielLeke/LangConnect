@@ -77,7 +77,7 @@ class UsersService {
     }
   }
 
-  Future<String> addInfo({required String email, required String field, required String info}) async {
+  Future<String> addInfo({required String email, required String field, required dynamic info}) async {
     try {
       await _firestore.collection('users').doc(email).update({
         field: info,
