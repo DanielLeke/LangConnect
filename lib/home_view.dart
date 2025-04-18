@@ -166,7 +166,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.settings),
+            leading: const Icon(Icons.person),
             selected: _drawerIndex == 0,
             selectedColor: Colors.blue[900],
             title: const Text("Profile"),
