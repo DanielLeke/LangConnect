@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:langconnect/utilities/users_service.dart';
 
 class FavoritesService {
   Future<void> addToFavorites(
@@ -52,15 +51,36 @@ class FavoritesService {
   }
 
   Future<List<Map<String, String>>> getFavorites(String email) async {
-    UsersService _usersService = UsersService();
-    List<Map<String, String>> favorites =
-        await _usersService.getUserInformation(email: email, field: "favorites")
-            as List<Map<String, String>>;
+    FirebaseFirestore firestore_db = FirebaseFirestore.instance;
+    List<Map<String, String>> favorites = [];
+    try {
+      DocumentSnapshot docSnapshot = await firestore_db
+          .collection("users")
+          .doc(email)
+          .collection("user_content")
+          .doc("favorites")
+          .get();
+
+      if (docSnapshot.exists) {
+        // If the document exists, get the current favorites
+        Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
+        if (data["favorites"] != null) {
+          favorites = List<Map<String, String>>.from(
+            (data["favorites"] as List)
+                .map((item) => Map<String, String>.from(item)),
+          );
+        }
+      } else {
+        print("No favorites found for this user.");
+      }
+    } catch (e) {
+      print("Error fetching favorites: $e");
+    }
     return favorites;
   }
 
   Future<void> removeFromFavorites(
-      String email, Map<String, String> favorite) async {
+      String email, int favoriteIndex) async {
     FirebaseFirestore firestore_db = FirebaseFirestore.instance;
     try {
       // Fetch the existing favorites
@@ -84,7 +104,7 @@ class FavoritesService {
         }
       }
       // Remove the specified favorite
-      favorites.remove(favorite);
+      favorites.removeAt(favoriteIndex);
 
       // Update Firestore with the updated list
       await firestore_db

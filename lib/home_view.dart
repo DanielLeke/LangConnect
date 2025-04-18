@@ -8,7 +8,8 @@ import 'package:langconnect/pages/translation_pages/chat_page.dart';
 import 'package:langconnect/pages/translation_pages/text_translator.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const HomeAppBar({super.key});
+  final String title;
+  const HomeAppBar({super.key, required this.title});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -18,9 +19,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       foregroundColor: Colors.white,
       backgroundColor: Colors.blue[900],
-      title: const Text(
-        "Language Translator",
-        style: TextStyle(
+      title: Text(
+        title,
+        style: const TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.bold,
           color: Colors.white,
@@ -219,7 +220,15 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const HomeAppBar(),
+      appBar: HomeAppBar(title: _navIndex == 0
+          ? "Chat"
+          : _navIndex == 1
+              ? "Camera"
+              : _navIndex == 2
+                  ? "Translate"
+                  : _navIndex == 3
+                      ? "History"
+                      : "Favorites",),
       drawer: const HomeDrawer(),
       bottomNavigationBar: HomeBottomNavBar(onTap: updateNavIndex),
       body: navpages[_navIndex],
