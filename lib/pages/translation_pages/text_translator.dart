@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:langconnect/utilities/favorites_service.dart';
+import 'package:langconnect/utilities/history_service.dart';
 import 'package:langconnect/utilities/translation_service.dart';
 import 'package:flutter/services.dart';
 
@@ -121,6 +122,14 @@ class _TranslatorState extends State<Translator> {
       favoritesClicked = false;
     });
     print("Translated Text: $translatedTextHolder");
+    HistoryService historyService = HistoryService();
+    await historyService.addToHistory(
+      FirebaseAuth.instance.currentUser!.email!,
+      {
+        "originalText": textToTranslate,
+        "translatedText": translatedTextHolder!,
+      },
+    );
   }
 
   @override
