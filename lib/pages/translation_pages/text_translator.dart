@@ -8,6 +8,7 @@ import 'package:langconnect/utilities/translation_service.dart';
 import 'package:flutter/services.dart';
 
 TextEditingController inputController = TextEditingController();
+bool favoritesClicked = false;
 
 class Translator extends StatefulWidget {
   const Translator({super.key});
@@ -117,10 +118,10 @@ class _TranslatorState extends State<Translator> {
         await TranslationService().translate(textToTranslate, targetLanguage);
     setState(() {
       translatedTextHolder = translatedText;
+      favoritesClicked = false;
     });
     print("Translated Text: $translatedTextHolder");
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -409,7 +410,10 @@ class TranslatedText extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   CopyBtn(translatedText: translatedText),
-                  FavoritesBtn(translatedText: translatedText, originalText: inputController.text,)
+                  FavoritesBtn(
+                    translatedText: translatedText,
+                    originalText: inputController.text,
+                  )
                 ],
               ),
             ),
@@ -450,7 +454,7 @@ class CopyBtn extends StatelessWidget {
   }
 }
 
-class FavoritesBtn extends StatelessWidget {
+class FavoritesBtn extends StatefulWidget {
   const FavoritesBtn({
     super.key,
     required this.translatedText,
@@ -461,17 +465,20 @@ class FavoritesBtn extends StatelessWidget {
   final String originalText;
 
   @override
-  Widget build(BuildContext context) {
-    IconData icon = Icons.favorite_outline;
+  State<FavoritesBtn> createState() => _FavoritesBtnState();
+}
 
+class _FavoritesBtnState extends State<FavoritesBtn> {
+  @override
+  Widget build(BuildContext context) {
     return IconButton(
         onPressed: () async {
           User? user = FirebaseAuth.instance.currentUser;
           String email = user!.email!;
           FavoritesService _favoritesService = FavoritesService();
           await _favoritesService.addToFavorites(email, {
-            "originalText": originalText,
-            "translatedText": translatedText,
+            "originalText": widget.originalText,
+            "translatedText": widget.translatedText,
           });
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
@@ -479,10 +486,12 @@ class FavoritesBtn extends StatelessWidget {
               duration: Duration(seconds: 2),
             ),
           );
-          icon = Icons.favorite;
+          setState(() {
+            favoritesClicked = true;
+          });
         },
         icon: Icon(
-          icon,
+          favoritesClicked ? Icons.favorite : Icons.favorite_outline,
           color: Colors.blue[900],
           size: 30,
         ));
