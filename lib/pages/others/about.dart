@@ -46,10 +46,15 @@ class About extends StatelessWidget {
               onTap: () async {
                 const url =
                     "https://www.figma.com/community/file/1207735623832581216/language-translator-app-ui-design-figma";
-                if (await canLaunchUrl(Uri.parse(url))) {
-                  await launchUrl(Uri.parse(url));
+                final uri = Uri.parse(url);
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri, mode: LaunchMode.externalApplication);
                 } else {
-                  throw "Could not launch $url";
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Could not launch the URL"),
+                    ),
+                  );
                 }
               },
               child: const Text(
