@@ -2,6 +2,9 @@
     <!-- Add the INTERNET permission -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Add the CAMERA permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:label="langconnect"
         android:name="${applicationName}"

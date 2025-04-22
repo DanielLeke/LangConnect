@@ -10,87 +10,64 @@ class CameraPage extends StatefulWidget {
 }
 
 class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
-  late CameraController? _cameraController;
+  late CameraController _cameraController;
+  late Future<void> _initializeControllerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _initializeControllerFuture = _initializeCamera(); // Assign the future here
+  }
+
+  Future<void> _initializeCamera() async {
+    try {
+      // Get the list of available cameras
+      final cameras = await Cameraservice().getAvailableCameras();
+      if (cameras.isNotEmpty) {
+        // Initialize the camera controller with the first available camera
+        _cameraController = CameraController(
+          cameras[0],
+          ResolutionPreset.high,
+        );
+        await Cameraservice().initializeCamera(_cameraController);
+        setState(() {}); // Rebuild the widget after initialization
+      } else {
+        throw Exception("No cameras found");
+      }
+    } catch (e) {
+      print("Error initializing camera: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ShowCamera(_cameraController!),
-        TakePicture(),
-      ],
+    return FutureBuilder<void>(
+      future: _initializeControllerFuture, // Use the future here
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          return Column(
+            children: [
+              Expanded(
+                child: CameraPreview(_cameraController),
+              ),
+              const TakePicture(),
+            ],
+          );
+        }
+      },
     );
   }
-}
-
-class ShowCamera extends StatefulWidget {
-  const ShowCamera(CameraController cameraController, {
-    super.key,
-  });
 
   @override
-  State<ShowCamera> createState() => _ShowCameraState();
-}
-
-class _ShowCameraState extends State<ShowCamera> {
-  Cameraservice cameraservice = Cameraservice();
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: cameraservice.getAvailableCameras(),
-        builder: (BuildContext context,
-            AsyncSnapshot<List<CameraDescription>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (snapshot.hasData) {
-            List<CameraDescription> cameras = snapshot.data!;
-            if (cameras.isNotEmpty) {
-              CameraController cameraController =
-                  CameraController(cameras[0], ResolutionPreset.high);
-              return FutureBuilder(
-                  future: cameraservice.initializeCamera(cameraController),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<void> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else {
-                      return CameraPreview(
-                        cameraController,
-                        child: Stack(
-                          children: [
-                            CameraPreview(cameraController),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: IconButton(
-                                icon: const Icon(Icons.camera),
-                                onPressed: () async {
-                                  try {
-                                    XFile picture = await cameraservice
-                                        .takePicture(cameraController);
-                                    // Handle the picture taken (e.g., display it, save it, etc.)
-                                  } catch (e) {
-                                    print("Error taking picture: $e");
-                                  }
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  });
-            } else {
-              return const Center(child: Text('No cameras found'));
-            }
-          } else {
-            return const Center(child: Text('No cameras found'));
-          }
-        });
+  void dispose() {
+    _cameraController.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 }
 
@@ -101,6 +78,11 @@ class TakePicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: () {}, icon: const Icon(Icons.camera));
+    return IconButton(
+      onPressed: () {
+        // Add functionality to take a picture
+      },
+      icon: const Icon(Icons.camera_alt),
+    );
   }
 }

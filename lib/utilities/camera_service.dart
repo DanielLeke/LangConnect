@@ -30,4 +30,8 @@ class Cameraservice {
       rethrow;
     }
   }
+
+  Future<void> dispose (CameraController controller) async {
+    await controller.dispose();
+  }
 }
