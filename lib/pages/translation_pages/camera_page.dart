@@ -40,6 +40,14 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     }
   }
 
+  IconData icon = Icons.flash_on_rounded;
+
+  void changeIcon(IconData newIcon) {
+    setState(() {
+      icon = newIcon;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
@@ -68,11 +76,20 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                   ),
 
                   // Take Picture button positioned at the bottom center
-                  const Align(
+                  Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: 16.0),
-                      child: TakePicture(),
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const TakePicture(),
+                          PutOnFlash(
+                            changeIcon: changeIcon,
+                            icon: icon,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -103,7 +120,57 @@ class TakePicture extends StatelessWidget {
       onPressed: () {
         // Add functionality to take a picture
       },
-      icon: const Icon(Icons.camera_alt),
+      icon: const Icon(
+        Icons.camera_alt,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
+class PutOnFlash extends StatefulWidget {
+  final Function(IconData) changeIcon;
+  final IconData icon;
+  const PutOnFlash({
+    super.key,
+    required this.changeIcon,
+    required this.icon,
+  });
+
+  @override
+  State<PutOnFlash> createState() => _PutOnFlashState();
+}
+
+class _PutOnFlashState extends State<PutOnFlash> {
+  late IconData _icon;
+
+  @override
+  void initState() {
+    super.initState();
+    _icon = widget.icon;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        // Add functionality to toggle flash
+        if (_icon == Icons.flash_on_rounded) {
+          widget.changeIcon(Icons.flash_off_rounded);
+          setState(() {
+            _icon = Icons.flash_off_rounded;
+          });
+        } else {
+          widget.changeIcon(Icons.flash_on_rounded);
+          setState(() {
+            _icon = Icons.flash_on_rounded;
+          });
+        }
+      },
+      icon: Icon(
+        _icon,
+        color: Colors.white,
+      ),
     );
   }
 }
