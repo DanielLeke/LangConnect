@@ -48,15 +48,36 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
+          print("Error in FutureBuilder: ${snapshot.error}");
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
-          return Column(
-            children: [
-              Expanded(
-                child: CameraPreview(_cameraController),
-              ),
-              const TakePicture(),
-            ],
+          if (!_cameraController.value.isInitialized) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return LayoutBuilder(
+            builder: (context, constraints) {
+              final screenAspectRatio =
+                  constraints.maxWidth / constraints.maxHeight;
+
+              return Stack(
+                children: [
+                  // CameraPreview as the background
+                  AspectRatio(
+                    aspectRatio: screenAspectRatio,
+                    child: CameraPreview(_cameraController),
+                  ),
+
+                  // Take Picture button positioned at the bottom center
+                  const Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 16.0),
+                      child: TakePicture(),
+                    ),
+                  ),
+                ],
+              );
+            },
           );
         }
       },
@@ -65,7 +86,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    _cameraController.dispose();
+    Cameraservice().dispose(_cameraController);
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
