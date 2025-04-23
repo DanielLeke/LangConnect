@@ -85,6 +85,7 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
                         children: [
                           const TakePicture(),
                           PutOnFlash(
+                            controller: _cameraController,
                             changeIcon: changeIcon,
                             icon: icon,
                           )
@@ -131,10 +132,12 @@ class TakePicture extends StatelessWidget {
 class PutOnFlash extends StatefulWidget {
   final Function(IconData) changeIcon;
   final IconData icon;
+  final CameraController controller;
   const PutOnFlash({
     super.key,
     required this.changeIcon,
     required this.icon,
+    required this.controller,
   });
 
   @override
@@ -153,8 +156,9 @@ class _PutOnFlashState extends State<PutOnFlash> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        // Add functionality to toggle flash
+      onPressed: () async {
+        Cameraservice cameraservice = Cameraservice();
+        // Toggle the icon
         if (_icon == Icons.flash_on_rounded) {
           widget.changeIcon(Icons.flash_off_rounded);
           setState(() {
@@ -166,6 +170,15 @@ class _PutOnFlashState extends State<PutOnFlash> {
             _icon = Icons.flash_on_rounded;
           });
         }
+        await cameraservice.toggleFlash(
+          widget.controller,
+          _icon == Icons.flash_on_rounded ? FlashMode.torch : FlashMode.off,
+        );
+        const Duration(seconds: 3);
+        await cameraservice.toggleFlash(
+          widget.controller,
+          _icon == Icons.flash_on_rounded ? FlashMode.always : FlashMode.off,
+        );
       },
       icon: Icon(
         _icon,

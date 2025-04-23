@@ -31,6 +31,15 @@ class Cameraservice {
     }
   }
 
+  Future<void> toggleFlash(CameraController controller, FlashMode nextMode) async {
+    try {
+      await controller.setFlashMode(nextMode);
+    } catch (e) {
+      print("Error toggling flash: $e");
+      
+    }
+  }
+
   Future<void> dispose (CameraController controller) async {
     await controller.dispose();
   }
